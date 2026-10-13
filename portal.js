@@ -7,53 +7,9 @@
   window.__iptvPortalPluginLoaded = true;
 
   var componentName = 'iptv_portal';
-  var portalOrigin = detectPortalOrigin();
-
-  function detectPortalOrigin() {
-    var origin = '';
-
-    try {
-      if (window.__iptvPortalOrigin)
-        origin = window.__iptvPortalOrigin;
-    } catch (e) {}
-
-    if (!origin) {
-      try {
-        if (document.currentScript && document.currentScript.src)
-          origin = new URL(document.currentScript.src, location.href).origin;
-      } catch (e) {}
-    }
-
-    if (!origin) {
-      try {
-        var scripts = document.getElementsByTagName('script');
-        for (var i = scripts.length - 1; i >= 0; i--) {
-          var src = scripts[i] && scripts[i].src ? scripts[i].src : '';
-          if (!src) continue;
-          if (src.indexOf('/iptvportal.js') >= 0 || src.indexOf('/lite/iptvportal/plugin.js') >= 0) {
-            origin = new URL(src, location.href).origin;
-            break;
-          }
-        }
-      } catch (e) {}
-    }
-
-    if (!origin) {
-      try {
-        if (window.Lampa && Lampa.Manifest && Lampa.Manifest.cub_domain && Lampa.Utils && Lampa.Utils.protocol)
-          origin = Lampa.Utils.protocol() + Lampa.Manifest.cub_domain;
-      } catch (e) {}
-    }
-
-    if (!origin)
-      origin = location.protocol + '//' + location.host;
-
-    try {
-      window.__iptvPortalOrigin = origin;
-    } catch (e) {}
-
-    return origin;
-  }
+  
+  // Жорстко фіксуємо адрес вашого Lampac-сервера
+  var portalOrigin = 'http://130.61.74.91:9118';
 
   function storageGet(key, fallback) {
     try {
@@ -103,7 +59,7 @@
       'body.iptv-portal-open{overflow:hidden!important;}' +
       'body.iptv-portal-open .head,body.iptv-portal-open .navigation-bar,body.iptv-portal-open .menu,body.iptv-portal-open>.player{visibility:hidden!important;pointer-events:none!important;}' +
       '.iptv-portal-component{position:fixed!important;inset:0!important;z-index:2147483647!important;width:100vw!important;height:100vh!important;background:#05070a;}' +
-      '.iptv-portal-component__frame{display:block;width:100%;height:100%;border:0;background:#05070a;}';
+      '.iptv-portal-component__frame{display:block;width:100%;height:100%;border:0;background:#05070a;';
     document.head.appendChild(style);
   }
 
